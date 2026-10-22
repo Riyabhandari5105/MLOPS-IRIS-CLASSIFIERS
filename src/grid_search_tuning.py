@@ -78,4 +78,3 @@ def run_grid_search(data_path: str):
 
 if __name__ == "__main__":
     run_grid_search("data/processed/iris_features.csv")
-

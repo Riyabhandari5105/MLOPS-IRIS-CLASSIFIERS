@@ -78,8 +78,4 @@ client.transition_model_version_stage(
     stage="Staging"
 )
 print("\nModel moved to Staging successfully.")
-print(
-    f"Model URI: models:/{registered_model_name}/Staging"
-)
-
-
+print(f"Model URI: models:/{registered_model_name}/Staging")

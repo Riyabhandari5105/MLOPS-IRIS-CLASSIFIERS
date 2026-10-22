@@ -1,15 +1,16 @@
+
 import argparse
 import logging
 import sys
+
 import pandas as pd
 
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s"
+    format="%(asctime)s [%(levelname)s] %(message)s",
 )
 
 logger = logging.getLogger("validate")
-
 
 EXPECTED_COLUMNS = {
     "sepal length (cm)",
@@ -26,7 +27,7 @@ EXPECTED_COLUMNS = {
 VALID_SPECIES = {
     "setosa",
     "versicolor",
-    "virginica"
+    "virginica",
 }
 
 RANGE_CHECKS = {
@@ -42,9 +43,7 @@ class DataValidationError(Exception):
 
 
 def validate(input_path: str) -> pd.DataFrame:
-
     df = pd.read_csv(input_path)
-
     errors = []
 
     # Check columns
@@ -57,7 +56,6 @@ def validate(input_path: str) -> pd.DataFrame:
 
     # Check null values
     if df.isnull().any().any():
-
         null_cols = df.columns[
             df.isnull().any()
         ].tolist()
@@ -78,14 +76,11 @@ def validate(input_path: str) -> pd.DataFrame:
 
     # Check ranges
     for col, (low, high) in RANGE_CHECKS.items():
-
         out_of_range = df[
-            (df[col] < low) |
-            (df[col] > high)
+            (df[col] < low) | (df[col] > high)
         ]
 
         if not out_of_range.empty:
-
             errors.append(
                 f"{len(out_of_range)} rows out of expected "
                 f"range for '{col}' ({low}-{high})"
@@ -94,37 +89,27 @@ def validate(input_path: str) -> pd.DataFrame:
     # Stop pipeline if validation fails
     if errors:
         raise DataValidationError(
-        "Validation failed: " + "; ".join(errors)
-    )
+            "Validation failed: " + "; ".join(errors)
+        )
+
     logger.info(
-        "Validation PASSED: %d rows, %d columns, "
-        "all checks satisfied",
-        len(df),
-        df.shape[1]
-    )
+        "Validation PASSED: %d rows, %d columns, ""all checks satisfied", len(df), df.shape[1], )
 
     return df
 
 
 if __name__ == "__main__":
-
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
         "--input",
-        default="data/processed/iris_features.csv"
+        default="data/processed/iris_features.csv",
     )
 
     args = parser.parse_args()
 
     try:
         validate(args.input)
-
     except DataValidationError as e:
-
-        logger.error(
-            "Pipeline halted: %s",
-            e
-        )
-
+        logger.error("Pipeline halted: %s", e)
         sys.exit(1)
