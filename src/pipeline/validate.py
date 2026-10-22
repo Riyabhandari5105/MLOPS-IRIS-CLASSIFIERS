@@ -93,14 +93,9 @@ def validate(input_path: str) -> pd.DataFrame:
 
     # Stop pipeline if validation fails
     if errors:
-
-        for e in errors:
-            logger.error(e)
-
         raise DataValidationError(
-            f"Validation failed with {len(errors)} error(s)"
-        )
-
+        "Validation failed: " + "; ".join(errors)
+    )
     logger.info(
         "Validation PASSED: %d rows, %d columns, "
         "all checks satisfied",
