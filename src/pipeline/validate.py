@@ -93,11 +93,7 @@ def validate(input_path: str) -> pd.DataFrame:
         )
 
     logger.info(
-        "Validation PASSED: %d rows, %d columns, "
-        "all checks satisfied",
-        len(df),
-        df.shape[1],
-    )
+        "Validation PASSED: %d rows, %d columns, ""all checks satisfied", len(df), df.shape[1], )
 
     return df
 
