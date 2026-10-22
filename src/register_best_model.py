@@ -81,5 +81,3 @@ print("\nModel moved to Staging successfully.")
 print(
     f"Model URI: models:/{registered_model_name}/Staging"
 )
-
-
