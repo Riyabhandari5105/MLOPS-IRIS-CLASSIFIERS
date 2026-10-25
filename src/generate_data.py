@@ -1,3 +1,4 @@
+# Remove the collection timestamp because it isn't a model feature.
 from sklearn.datasets import load_iris
 
 iris = load_iris(as_frame=True)
